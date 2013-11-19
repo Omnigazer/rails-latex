@@ -1,6 +1,6 @@
 class LatexToRtf
   def self.config
-    @config||={:command => 'latex2rtf', :arguments => []}
+    @config||={:command => 'pandoc', :arguments => ['-o input.rtf']}
   end
 
   # Converts a string of LaTeX +code+ into a binary string of RTF.
