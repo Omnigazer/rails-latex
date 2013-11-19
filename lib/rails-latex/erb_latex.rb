@@ -17,7 +17,7 @@ module ActionView               # :nodoc: all
         out=self.class.erb_implementation.new(erb, :trim=>(self.class.erb_trim_mode == "-")).src
         case _format
         when "rtf" then
-          out + ";LatexToRtf.generate_rtf(@output_buffer.to_s,@latex_config||{}"
+          out + ";LatexToRtf.generate_rtf(@output_buffer.to_s,@latex_config||{})"
         else
           out + ";LatexToPdf.generate_pdf(@output_buffer.to_s,@latex_config||{},@latex_parse_twice)"  
         end
