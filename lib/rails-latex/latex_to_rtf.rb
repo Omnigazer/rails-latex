@@ -1,6 +1,7 @@
+require 'iconv'
 class LatexToRtf
   def self.config
-    @config||={:command => 'latex2rtf', :arguments => []}
+    @config||={:command => 'latex2rtf', :arguments => ['-oreport.rtf']}
   end
 
   # Converts a string of LaTeX +code+ into a binary string of RTF.
@@ -22,7 +23,8 @@ class LatexToRtf
     if supporting.class == String or supporting.class == Array and supporting.length > 0
       FileUtils.cp(supporting, dir)
     end
-    File.open(input,'wb') {|io| io.write(code) }
+    code = Iconv.conv('CP1251', 'UTF-8', code)
+    File.open(input,'w:Windows-1251') {|io| io.write(code) }
     Process.waitpid(
       fork do
         begin
@@ -40,10 +42,10 @@ class LatexToRtf
           Process.exit! 1
         end
       end)
-    if File.exist?(rtf_file=input.sub(/\.tex$/,'.rtf'))
-      FileUtils.mv(input.sub(/\.tex$/,'.log'),File.join(dir,'..','input.log'))
-      result=File.read(rtf_file)
-      FileUtils.rm_rf(dir)
+    if File.exist?(rtf_file=File.join(dir,'report.rtf'))
+#      FileUtils.mv(input.sub(/\.tex$/,'.log'),File.join(dir,'..','input.log'))
+      result = rtf_file
+#      FileUtils.rm_rf(dir)
     else
       raise "rtflatex failed: See #{input.sub(/\.tex$/,'.log')} for details"
     end
