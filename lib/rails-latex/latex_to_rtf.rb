@@ -35,9 +35,9 @@ class LatexToRtf
           # system config[:command],'-draftmode',*args if parse_twice
           exec config[:command],*args
         rescue
-          File.open("input.log",'w') {|io|
-            io.write("#{$!.message}:\n#{$!.backtrace.join("\n")}\n")
-          }
+          #File.open("input.log",'w') {|io|
+          #  io.write("#{$!.message}:\n#{$!.backtrace.join("\n")}\n")
+          #}
         ensure
           Process.exit! 1
         end
