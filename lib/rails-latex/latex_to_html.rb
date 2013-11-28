@@ -1,7 +1,6 @@
-require 'iconv'
 class LatexToHtml
   def self.config
-    @config||={:command => 'latex2html', :arguments => []}
+    @config||={:command => 'latex2html', :arguments => ['-no_navigation']}
   end
 
   # Converts a string of LaTeX +code+ into a binary string of HTML.
@@ -23,8 +22,7 @@ class LatexToHtml
     if supporting.class == String or supporting.class == Array and supporting.length > 0
       FileUtils.cp(supporting, dir)
     end
-    code = Iconv.conv('CP1251', 'UTF-8', code)
-    File.open(input,'w:Windows-1251') {|io| io.write(code) }
+    File.open(input,'w') {|io| io.write(code) }
     Process.waitpid(
       fork do
         begin
@@ -42,10 +40,10 @@ class LatexToHtml
           Process.exit! 1
         end
       end)
-    if File.exist?(rtf_file=File.join(dir,'input','input.html'))
+    if File.exist?(html_file=File.join(dir,'input','input.html'))
 #      FileUtils.mv(input.sub(/\.tex$/,'.log'),File.join(dir,'..','input.log'))
-       result = rtf_file
-#      FileUtils.rm_rf(dir)
+	result=File.read(html_file).html_safe
+        FileUtils.rm_rf(dir)
     else
       raise "latex2html failed: See #{input.sub(/\.tex$/,'.log')} for details"
     end
