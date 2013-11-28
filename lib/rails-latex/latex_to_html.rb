@@ -12,7 +12,7 @@ class LatexToHtml
   # The config argument defaults to LatexTohtml.config but can be overridden using @latex_config.
   #
   # The parse_twice argument is deprecated in favor of using config[:parse_twice] instead.
-  def self.generate_rtf(code,config)
+  def self.generate_html(code,config)
     config=self.config.merge(config)
     # parse_twice=config[:parse_twice] if parse_twice.nil?
     dir=File.join(Rails.root,'tmp','rails-latex',"#{Process.pid}-#{Thread.current.hash}")
