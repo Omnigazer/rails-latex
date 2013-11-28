@@ -2,6 +2,7 @@
 require 'fileutils'
 require 'rails-latex/latex_to_pdf'
 require 'rails-latex/latex_to_rtf'
+require 'rails-latex/latex_to_html'
 require 'action_view'
 
 module ActionView               # :nodoc: all
@@ -28,4 +29,3 @@ module ActionView               # :nodoc: all
   end
   Template.register_template_handler :erbtex, Template::Handlers::ERBLatex
 end
-
