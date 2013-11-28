@@ -18,6 +18,8 @@ module ActionView               # :nodoc: all
         case _format
         when "rtf" then
           out + ";LatexToRtf.generate_rtf(@output_buffer.to_s,@latex_config||{})"
+        when "html" then
+          out + ";LatexToHtml.generate_html(@output_buffer.to_s,@latex_config||{})"
         else
           out + ";LatexToPdf.generate_pdf(@output_buffer.to_s,@latex_config||{},@latex_parse_twice)"  
         end
